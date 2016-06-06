@@ -9,19 +9,10 @@ export default class {
   }
 
   start () {
-    this.io.on('connection', (err, socket, session) => {
+    this.io.on('connection', socket => {
       console.log(socket.id)
-      console.log(session)
       socket.on('login', data => {
-        //UserApi.auth(data.email, data.password)
-        //.then(user => {
-          //this.userSockets.set(socket.id, socket)
-          //this.userIdToSocketIds.set(user._id, socket.id)
-          //socket.handshake.session.user = user
-        //})
-        //.catch(err => {
-          //console.log(err)
-        //})
+        console.log(data)
       })
       socket.on('sendMsg', msg => {
         sendMsg (socket, msg.rid)

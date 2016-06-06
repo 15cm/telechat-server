@@ -17,10 +17,7 @@ router.post('/auth', (req, res) => {
   }
   Users.findOne(auth).exec()
   .then(user => {
-    req.session.user = user
-    console.log('Auth:')
-    console.log(req.session)
-    res.status(200).json(user)
+    res.status(200).json(user._id)
   }).catch(err => {
     res.status(404).send(err)
   })
