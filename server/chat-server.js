@@ -12,7 +12,7 @@ export default class {
     this.io.on('connection', socket => {
       console.log(socket.id)
       socket.on('login', data => {
-        console.log(data)
+        //console.log(data)
       })
       socket.on('sendMsg', msg => {
         sendMsg (socket, msg.rid)

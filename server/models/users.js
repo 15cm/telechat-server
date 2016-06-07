@@ -15,12 +15,18 @@ var usersSchema = mongoose.Schema({
     {
       name: String,
       members: [
-        { id: Oid }
+        { uid: Oid }
       ]
     }
   ]
 })
 
+usersSchema.path('groups').default(()=>[
+  {
+    name: 'default',
+    members: []
+  }
+])
 var Users = mongoose.model('user',usersSchema)
 
 export default Users

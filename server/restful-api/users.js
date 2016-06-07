@@ -23,4 +23,41 @@ router.post('/auth', (req, res) => {
   })
 })
 
+// Search users by key word
+router.get('/search/:query', (req, res) => {
+  var query = req.params.query
+  Users.find({
+    $or: [
+      {
+        name: new RegExp(query, 'i')
+      },
+      {
+        email: new RegExp(query, 'i')
+      }
+    ]
+  }, toRes(res))
+})
+
+router.post('/addcontacts/:uid', (req, res) => {
+    Users.findById(req.params.uid, (err, user) => {
+        var idSet = new Set()
+        for(let group of user.groups){
+            for(let member of group.members){
+                idSet.add(member.uid.toString())
+            }
+        }
+        for(let id of req.body.ids){
+            if(!idSet.has(id) && id != user._id){
+                user.groups[0].members.push({uid: id})
+            }
+        }
+        user.save((err, user, numAffected) => {
+            if(err){
+                console.log(err)
+            }else{
+                res.status(200).json(user)
+            }
+        })
+    })
+})
 export default router
