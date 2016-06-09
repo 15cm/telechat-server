@@ -4,18 +4,20 @@ import MsgApi from './api/msgs'
 export default class {
   constructor (io) {
     this.io = io
-    this.userSockets = new Map()
-    this.userIdToSocketIds = new Map()
+    //this.userSockets = new Map()
+    //this.userIdToSocketIds = new Map()
   }
 
   start () {
     this.io.on('connection', socket => {
-      console.log(socket.id)
-      socket.on('login', data => {
-        //console.log(data)
-      })
+      //socket.on('login', data => {
+        //this.userSockets.set(socket.id, socket)
+        //this.userIdToSocketIds.set(data.id, socket.id)
+        //console.log(this.userSockets)
+        //console.log(this.userIdToSocketIds)
+      //})
       socket.on('sendMsg', msg => {
-        sendMsg (socket, msg.rid)
+        this.sendMsg (socket, msg)
       })
       socket.on('disconnect', () => {
         this.broadcastUserDisconnect(socket)
@@ -26,9 +28,12 @@ export default class {
     })
   }
 
-  sendMsg (socket, rid) {
+  sendMsg (socket, msg) {
     MsgApi.create(msg).then(msg => {
-      socket.broadcast.to(userIdToSocketIds.get(rid)).emit('recvMsg', msg)
+      UserApi.updateChat(msg).then(users => {
+        this.io.emit('recvMsg', msg)
+      })
+      //socket.broadcast.to(userIdToSocketIds.get(msg.rid)).emit('recvMsg', msg)
     })
     .catch(err => {
       socket.emit('err',err)

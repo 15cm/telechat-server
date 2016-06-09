@@ -7,7 +7,7 @@ export default class {
     return this.model.findById(id).exec()
   }
   create (data) {
-    return this.model.create(data).exec()
+    return this.model.create(data)
   }
   update (id,data) {
     return this.model.findByIdAndUpdate(id, data).exec()

@@ -18,6 +18,16 @@ var usersSchema = mongoose.Schema({
         { uid: Oid }
       ]
     }
+  ],
+  chats: [
+    {
+      uid: Oid,
+      lastTime: {
+        type: Date,
+        default: Date.now
+      },
+      lastMsg: String
+    }
   ]
 })
 

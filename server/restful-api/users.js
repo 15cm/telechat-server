@@ -38,8 +38,10 @@ router.get('/search/:query', (req, res) => {
   }, toRes(res))
 })
 
+// Add contacts
 router.post('/addcontacts/:uid', (req, res) => {
     Users.findById(req.params.uid, (err, user) => {
+        if(err) console.log(err)
         var idSet = new Set()
         for(let group of user.groups){
             for(let member of group.members){
@@ -60,4 +62,30 @@ router.post('/addcontacts/:uid', (req, res) => {
         })
     })
 })
+
+// Record chat
+router.post('/recordchat/:uid', (req, res) => {
+    Users.findById(req.params.uid, (err, user) => {
+        if(err) console.log(err)
+        var flag = true
+        var nChat = req.body
+        for(let chat of user.chats){
+            if(req.body.rid == chat.rid){
+                chat.lastTime = new Date()
+                chat.lastMsg = nChat.lastMsg
+                flag = false
+                break
+            }
+        }
+        if(flag){
+            user.chats.push({
+                rid: req.body.id,
+                lastTime: new Date(),
+                lastMsg: ''
+            })
+        }
+        user.save(toRes(res))
+    })
+})
+
 export default router
