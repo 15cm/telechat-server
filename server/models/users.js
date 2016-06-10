@@ -38,7 +38,7 @@ usersSchema.plugin(uniqueValidator)
 
 usersSchema.path('groups').default(()=>[
   {
-    name: 'default',
+    name: '默认分组',
     members: []
   }
 ])

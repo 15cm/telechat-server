@@ -15,6 +15,7 @@ export default (model) => {
 
   // Update
   router.put('/:id', (req, res) => {
+    delete req.body.id
     model.findByIdAndUpdate(req.params.id, req.body, toRes(res))
   })
 

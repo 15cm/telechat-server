@@ -18,9 +18,7 @@ var chat = new ChatServer(io)
 chat.start()
 
 // 3rd party middleware
-app.use(cors({
-	exposedHeaders: ['Link']
-}));
+app.use(cors());
 
 app.use(bodyParser.json({
 	limit : '100kb'
@@ -37,7 +35,7 @@ db( λ => {
 
 	app.server.listen(process.env.PORT || 8080);
 
-	console.log(`Started on port ${app.server.address().port}`);
+	console.log(`Started on port ${process.env.PORT || 8080}`);
 });
 
 export default app;
