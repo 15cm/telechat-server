@@ -12,8 +12,8 @@ var usersSchema = mongoose.Schema({
   password: String,
   avatar: {
     type: String,
-    default: 'http://o8idiuwvl.bkt.clouddn.com/default_avatar.jpg'
-  }
+    default: 'http://o8idiuwvl.bkt.clouddn.com/default_avatar.jpg?imageView2/3/w/64/h/64/q/100/format/png'
+  },
   sign: String,
   groups: [
     {

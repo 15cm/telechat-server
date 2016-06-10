@@ -15,8 +15,6 @@ export default (model) => {
 
   // Update
   router.put('/:id', (req, res) => {
-    console.log('Update')
-    console.log(req.body.groups)
     model.findByIdAndUpdate(req.params.id, req.body, toRes(res))
   })
 
