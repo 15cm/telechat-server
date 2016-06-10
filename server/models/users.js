@@ -10,7 +10,11 @@ var usersSchema = mongoose.Schema({
   },
   name: String,
   password: String,
-  avatar: String,
+  avatar: {
+    type: String,
+    default: 'http://o8idiuwvl.bkt.clouddn.com/default_avatar.jpg'
+  }
+  sign: String,
   groups: [
     {
       name: String,
@@ -30,6 +34,7 @@ var usersSchema = mongoose.Schema({
     }
   ]
 })
+usersSchema.plugin(uniqueValidator)
 
 usersSchema.path('groups').default(()=>[
   {
